@@ -1,0 +1,208 @@
+<template>
+  <div class="justify-center justify-items-center grid grid-cols-1">
+    <h2 class="text-2xl text-center mt-8 mb-4">Performance Characteristics for Diagnostic Tests</h2>
+    <div class="justify-self-center">
+      <table class="table-auto border-collapse">
+        <thead>
+          <tr>
+            <th colspan="2"></th>
+            <th colspan="2" scope="colgroup" class="text-center border-b-2 border-purple-900 p-2">Disease</th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th colspan="2" class=""></th>
+            <th scope="row" class="text-center border-b border-purple-900 p-2">Present</th>
+            <th scope="row" class="text-center border-b border-purple-900 p-2">Absent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th rowspan="2" scope="colgroup" class="text-left align-middle border-r-2 border-purple-900 p-2">Test</th>
+            <th scope="row" class="align-middle border-r border-purple-900 p-2">Positive</th>
+            <td class="p-2">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div class="inline-block align-middle">True Positives</div>
+                <div class="inline-block align-middle">a= <input v-model.number="truePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+              </div>
+            </td>
+            <td class="p-2">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div class="inline-block align-middle">False Positives</div>
+                <div class="inline-block align-middle">c= <input v-model.number="falsePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="align-middle border-r border-purple-900 p-2">Negative</th>
+            <td class="p-2">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div class="inline-block align-middle">False Negatives</div>
+                <div class="inline-block align-middle">b= <input v-model.number="falseNegatives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+              </div>
+            </td>
+            <td class="p-2">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div class="inline-block align-middle">True Negatives</div>
+                <div class="inline-block align-middle">d= <input v-model.number="trueNegatives" type="text" class="py-1 px-2 bg-white  shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <th scope="row" class="p-2 align-middle">Total</th>
+            <td class="p-2 border-t border-b border-purple-900">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div></div>
+                <div>
+                  a+b=<input disabled v-model.number="totalDiseasePresent" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                </div>
+              </div>
+            </td>
+            <td class="p-2 border-t border-b border-purple-900">
+              <div class="flex justify-between space-x-4 content-center items-center">
+                <div></div>
+                <div>
+                  c+d=<input disabled v-model.number="totalDiseaseAbsent" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                </div>
+              </div></td>
+          </tr>
+          <tr>
+            <th></th>
+            <th scope="row" class="p-2 align-middle">Sample Total</th>
+            <td scope="row" colspan="2" class="p-2 text-center">
+                a+b+c+d=  <input disabled v-model.number="totalSample" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none ml-8"
+                v-on:click="reset()">Reset</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 class="text-2xl text-center mt-8 mb-4">Results</h2>
+    <div>
+      <table class="table-auto border border-collapse border-purple-900">
+        <thead>
+          <tr class="bg-purple-900 text-white">
+            <th scope="col" class="px-4 py-1 border border-purple-900">Statistic</th>
+            <th scope="col" class="px-4 py-1 border border-purple-900">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Sensitivity</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ sensitivity }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Specificity</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ specificity }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Positive Likelihood Ratio</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ positiveLR }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Negative Likelihood Ratio</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ negativeLR }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Prevalence</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ prevalence }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Positive Predictive Value</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ positivePredictiveValue }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Negative Predictive Value</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ negativePredictiveValue }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Accuracy</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ accuracy }}%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-2">
+        <h3 class="text-2xl text-centereading-8">Change prevalence by:</h3>
+        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+        v-on:click="multiplyPrevalenceBy(.1)">* 1/10</button>
+        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+        v-on:click="multiplyPrevalenceBy(.5)">* 1/2</button>
+        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+        v-on:click="multiplyPrevalenceBy(2)">* 2</button>
+        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+        v-on:click="multiplyPrevalenceBy(10)">* 10</button>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import DiagnosticTestPerformance from './DiagnosticTestPerformance.js';
+import { safeDisplay, roundFixed, roundPrecision } from "../helpers.js"
+
+export default {
+  name: 'DiagnosticTest',
+  data() {
+    return {
+      truePositives: 0,
+      falseNegatives: 0,
+      falsePositives: 0,
+      trueNegatives: 0,
+    }
+  },
+  computed: {
+    results() {
+      return new DiagnosticTestPerformance(this.truePositives, this.falseNegatives, this.falsePositives, this.trueNegatives)
+    },
+    prevalence() {
+      return roundPrecision(100 * this.results.prevalence)
+    },
+    totalDiseasePresent() {
+      return safeDisplay(this.results.totalDiseasePresent)
+    },
+    totalDiseaseAbsent() {
+      return safeDisplay(this.results.totalDiseaseAbsent)
+    },
+    totalSample() {
+      return safeDisplay(this.results.totalSample)
+    },
+    sensitivity() {
+      return roundPrecision(100 * this.results.sensitivity)
+    },
+    specificity() {
+      return roundPrecision(100 * this.results.specificity)
+    },
+    positiveLR() {
+      return roundFixed(this.results.positiveLR, 1)
+    },
+    negativeLR() {
+      return roundFixed(this.results.negativeLR, 1)
+    },
+    positivePredictiveValue() {
+      return roundPrecision(100 * this.results.positivePredictiveValue)
+    },
+    negativePredictiveValue() {
+      return roundPrecision(100 * this.results.negativePredictiveValue)
+    },
+    accuracy() {
+      return roundPrecision(100 * this.results.accuracy)
+    }
+    
+  },
+  methods: {
+    reset() {
+      this.truePositives = 0
+      this.falseNegatives = 0
+      this.falsePositives = 0
+      this.trueNegatives = 0
+    },
+    multiplyPrevalenceBy(multiple) {
+      this.falsePositives = this.falsePositives * multiple
+      this.trueNegatives =  this.trueNegatives * multiple
+    }
+  }
+}
+</script>
