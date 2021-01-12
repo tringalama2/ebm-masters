@@ -78,6 +78,7 @@
             <th scope="row" class="text-left px-4 py-1 border border-purple-900">Relative risk [RR] (<i>risk ratio</i>) = a/(a+b) / c/(c+d)</th>
             <td class="bg-white px-4 py-1 border border-purple-900">{{ relativeRisk }}</td>
           </tr>
+          <template v-if="!isHarm()">
           <tr>
             <th scope="row" class="text-left px-4 py-1 border border-purple-900">Relative risk reduction (also 1 - RR) = ( c/(c+d) - a/(a+b) ) / c/(c+d)</th>
             <td class="bg-white px-4 py-1 border border-purple-900">{{ relativeRiskReduction }}</td>
@@ -90,6 +91,24 @@
             <th scope="row" class="text-left px-4 py-1 border border-purple-900 bg-purple-200">Number needed to treat = 100 / (ARR as a %)</th>
             <td class="bg-white px-4 py-1 border border-purple-900">{{ numberNeededToTreat }}</td>
           </tr>
+          </template>
+          <template v-if="isHarm()">
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900 bg-red-600 text-red-50" colspan="2">These results indicate harm: the event rate for the exposure group is greater than the control.</th>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Relative risk increase = ( a/(a+b) - c/(c+d) ) / a/(a+b)</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ relativeRiskIncrease }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900 bg-purple-200">Absolute risk increase [ARI]  = a/(a+b) - c/(c+d) </th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ absoluteRiskIncrease }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900 bg-purple-200">Number needed to harm = 100 / (ARI as a %)</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ numberNeededToHarm }}</td>
+          </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -104,50 +123,77 @@ export default {
   name: 'Risk',
   data() {
     return {
-      exposureGroupSize: 0,
-      controlGroupSize: 0,
-      exposureEvents: 0,
-      controlEvents: 0,
+      exposureGroupSize: '',
+      controlGroupSize: '',
+      exposureEvents: '',
+      controlEvents: '',
     }
   },
   computed: {
     exposureNonEvents() {
-      return safeDisplay(this.exposureGroupSize - this.exposureEvents)
+      return this.displayIfAllFieldsFilled(safeDisplay(this.exposureGroupSize - this.exposureEvents))
     },
     controlNonEvents() {
-      return safeDisplay(this.controlGroupSize - this.controlEvents)
+      return this.displayIfAllFieldsFilled(safeDisplay(this.controlGroupSize - this.controlEvents))
     },
     exposureRisk() {
-      return roundFixed(100 * this.exposureEvents / this.exposureGroupSize)
+      return this.displayIfAllFieldsFilled(roundFixed(100 * this.exposureEvents / this.exposureGroupSize))
     },
     baselineRisk () {
-      return roundFixed(100 * this.controlEvents / this.controlGroupSize)
+      return this.displayIfAllFieldsFilled(roundFixed(100 * this.controlEvents / this.controlGroupSize))
+    },
+    rawExposureRisk() {
+      return this.exposureEvents / this.exposureGroupSize
+    },
+    rawBaselineRisk() {
+      return this.controlEvents / this.controlGroupSize
     },
     exposureOdds() {
-      return roundFixed(this.exposureEvents / this.exposureNonEvents, 2)
+      return this.displayIfAllFieldsFilled(roundFixed(this.exposureEvents / this.exposureNonEvents, 2))
     },
     controlOdds() {
-      return roundFixed(this.controlEvents / this.controlNonEvents, 2)
+      return this.displayIfAllFieldsFilled(roundFixed(this.controlEvents / this.controlNonEvents, 2))
     },
     relativeRisk() {
-      return roundFixed(this.exposureRisk / this.baselineRisk, 2)
+      return this.displayIfAllFieldsFilled(roundFixed(this.exposureRisk / this.baselineRisk, 2))
     },
     relativeRiskReduction() {
-      return roundFixed(1 - this.relativeRisk, 2)
+      return this.displayIfAllFieldsFilled(roundFixed(1 - this.relativeRisk, 2))
     },
     absoluteRiskReduction() {
-      return roundPrecision((this.baselineRisk - this.exposureRisk), 2)
+      return this.displayIfAllFieldsFilled(roundPrecision((this.baselineRisk - this.exposureRisk), 2))
     },
     numberNeededToTreat() {
-      return roundFixed(100 / this.absoluteRiskReduction, 0)
+      return this.displayIfAllFieldsFilled(roundFixed(100 / this.absoluteRiskReduction, 0))
+    },
+    absoluteRiskIncrease() {
+      return this.displayIfAllFieldsFilled(roundPrecision((this.exposureRisk - this.baselineRisk), 2))
+    },
+    relativeRiskIncrease() {
+      return this.displayIfAllFieldsFilled(roundFixed((this.absoluteRiskIncrease / this.exposureRisk), 2))
+    },
+    numberNeededToHarm() {
+      return this.displayIfAllFieldsFilled(roundFixed(100 / this.absoluteRiskIncrease, 0))
     }
   },
   methods: {
     reset() {
-      this.exposureGroupSize = 0
-      this.controlGroupSize = 0
-      this.exposureEvents = 0
-      this.controlEvents = 0
+      this.exposureGroupSize = ''
+      this.controlGroupSize = ''
+      this.exposureEvents = ''
+      this.controlEvents = ''
+    },
+    isNumber(val) {
+      return typeof val === "number"
+    },
+    allFieldsFilled() {
+      return this.isNumber(this.exposureGroupSize) && this.isNumber(this.controlGroupSize) && this.isNumber(this.exposureEvents) && this.isNumber(this.controlEvents)
+    },
+    displayIfAllFieldsFilled(val) {
+      return this.allFieldsFilled() ? val : ''
+    },
+    isHarm() {
+      return this.allFieldsFilled() && parseFloat(this.rawExposureRisk) > parseFloat(this.rawBaselineRisk)
     }
   }
 }
