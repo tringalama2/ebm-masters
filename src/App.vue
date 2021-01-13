@@ -15,7 +15,23 @@
       </nav>
     </div>
     <div>{{ $route.isActive }}</div>
+    
     <router-view />
+
+    <footer class="footer relative pt-2 border-t border-purple-600 mt-16 ">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col items-center">
+          <div class="sm:w-2/3 text-center py-6">
+            <p class="text-sm text-purple-600 mb-2">
+                The tools on this page are for educational purposes. Calculations must be re-checked and should not be used alone to guide patient care, nor should they substitute for clinical judgment. 
+            </p>
+            <p class="text-sm text-purple-400 font-medium mb-2">
+                © {{ year }} by Steven Tringali
+            </p>
+          </div>
+        </div>
+      </div>
+  </footer>
   </div>
 </template>
 <script>
@@ -24,7 +40,13 @@ export default {
   data() {
     return {
       routes: this.$router.options.routes
-    };
+    }
+  },
+  computed: {
+    year() {
+      let date = new Date()
+      return date.getFullYear()
+    }
   }
 }
 </script>
