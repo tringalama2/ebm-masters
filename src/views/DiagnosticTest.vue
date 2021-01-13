@@ -147,10 +147,10 @@ export default {
   name: 'DiagnosticTest',
   data() {
     return {
-      truePositives: 0,
-      falseNegatives: 0,
-      falsePositives: 0,
-      trueNegatives: 0,
+      truePositives: '',
+      falseNegatives: '',
+      falsePositives: '',
+      trueNegatives: '',
     }
   },
   computed: {
@@ -158,50 +158,61 @@ export default {
       return new DiagnosticTestPerformance(this.truePositives, this.falseNegatives, this.falsePositives, this.trueNegatives)
     },
     prevalence() {
-      return roundPrecision(100 * this.results.prevalence)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.prevalence))
     },
     totalDiseasePresent() {
-      return safeDisplay(this.results.totalDiseasePresent)
+      return this.displayIfAllFieldsFilled(safeDisplay(this.results.totalDiseasePresent))
     },
     totalDiseaseAbsent() {
-      return safeDisplay(this.results.totalDiseaseAbsent)
+      return this.displayIfAllFieldsFilled(safeDisplay(this.results.totalDiseaseAbsent))
     },
     totalSample() {
-      return safeDisplay(this.results.totalSample)
+      return this.displayIfAllFieldsFilled(safeDisplay(this.results.totalSample))
     },
     sensitivity() {
-      return roundPrecision(100 * this.results.sensitivity)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.sensitivity))
     },
     specificity() {
-      return roundPrecision(100 * this.results.specificity)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.specificity))
     },
     positiveLR() {
-      return roundFixed(this.results.positiveLR, 1)
+      return this.displayIfAllFieldsFilled(roundFixed(this.results.positiveLR, 1))
     },
     negativeLR() {
-      return roundFixed(this.results.negativeLR, 1)
+      return this.displayIfAllFieldsFilled(roundFixed(this.results.negativeLR, 1))
     },
     positivePredictiveValue() {
-      return roundPrecision(100 * this.results.positivePredictiveValue)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.positivePredictiveValue))
     },
     negativePredictiveValue() {
-      return roundPrecision(100 * this.results.negativePredictiveValue)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.negativePredictiveValue))
     },
     accuracy() {
-      return roundPrecision(100 * this.results.accuracy)
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.accuracy))
     }
     
   },
   methods: {
     reset() {
-      this.truePositives = 0
-      this.falseNegatives = 0
-      this.falsePositives = 0
-      this.trueNegatives = 0
+      this.truePositives = ''
+      this.falseNegatives = ''
+      this.falsePositives = ''
+      this.trueNegatives = ''
     },
     multiplyPrevalenceBy(multiple) {
-      this.falsePositives = this.falsePositives * multiple
-      this.trueNegatives =  this.trueNegatives * multiple
+      if (this.allFieldsFilled()) {
+        this.falsePositives = this.falsePositives * multiple
+        this.trueNegatives =  this.trueNegatives * multiple
+      }
+    },
+    isNumber(val) {
+      return typeof val === "number"
+    },
+    allFieldsFilled() {
+      return this.isNumber(this.truePositives) && this.isNumber(this.falseNegatives) && this.isNumber(this.falsePositives) && this.isNumber(this.trueNegatives)
+    },
+    displayIfAllFieldsFilled(val) {
+      return this.allFieldsFilled() ? val : ''
     }
   }
 }
