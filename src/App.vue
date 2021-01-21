@@ -7,7 +7,7 @@
           </div>
           <ul class="flex flex-row space-x-4 ml-6">
             <router-link v-for="route in routes" :key="route.path" :to="route.path" tag="li" v-slot="{ href, navigate, isActive }">
-              <a :active="isActive" :href="href" @click="navigate" :class="isActive ? 'text-white bg-purple-600 hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium' : 'text-purple-500 bg-purple-300 hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium'"
+              <a :active="isActive" :href="href" @click="navigate" :class="'whitespace-nowrap font-medium text-sm rounded-md px-3 py-2 '+ (isActive ? 'text-white bg-purple-600 hover:bg-purple-500 hover:text-white' : 'text-purple-600 bg-purple-300 hover:bg-purple-500 hover:text-purple-100')"
     >{{ route.name }}</a
   >
             </router-link>

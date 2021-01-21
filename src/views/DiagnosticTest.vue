@@ -55,7 +55,7 @@
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div></div>
                 <div>
-                  a+b=<input disabled v-model.number="totalDiseasePresent" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                  a+b=<input disabled v-model.number="totalDiseasePresent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 </div>
               </div>
             </td>
@@ -63,7 +63,7 @@
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div></div>
                 <div>
-                  c+d=<input disabled v-model.number="totalDiseaseAbsent" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                  c+d=<input disabled v-model.number="totalDiseaseAbsent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 </div>
               </div></td>
           </tr>
@@ -71,7 +71,7 @@
             <th></th>
             <th scope="row" class="p-2 align-middle">Sample Total</th>
             <td scope="row" colspan="2" class="p-2 text-center">
-                a+b+c+d=  <input disabled v-model.number="totalSample" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                a+b+c+d=  <input disabled v-model.number="totalSample" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none ml-8"
                 v-on:click="reset()">Reset</button>
             </td>

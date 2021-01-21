@@ -33,8 +33,8 @@
           </tr>
           <tr>
             <th scope="row" class="align-middle border-r border-purple-900 p-2">No</th>
-            <td class="p-2 text-right">b=<input disabled v-model.number="exposureNonEvents" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" /></td>
-            <td class="p-2 text-right">d=<input disabled v-model.number="controlNonEvents" type="text" class="py-1 px-2 text-purple-500 bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" /></td>
+            <td class="p-2 text-right">b=<input disabled v-model.number="exposureNonEvents" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" /></td>
+            <td class="p-2 text-right">d=<input disabled v-model.number="controlNonEvents" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" /></td>
           </tr>
           <tr>
             <th></th>
