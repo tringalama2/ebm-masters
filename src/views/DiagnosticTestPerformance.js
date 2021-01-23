@@ -58,6 +58,14 @@ export default class DiagnosticTestPerformance {
         return this.calcPrevalence();
     }
 
+    get postTestProbabilityIfPositive() {
+        return this.calcPostTestProbabilityIfPositive();
+    }
+
+    get postTestProbabilityIfNegative() {
+        return this.calcPostTestProbabilityIfNegative();
+    }
+
 	calcTotalDiseasePresent() {
         return this.truePositives + this.falseNegatives;
     }
@@ -110,8 +118,35 @@ export default class DiagnosticTestPerformance {
         return this.totalDiseasePresent / this.totalSample;
     }
 
+    calcPostTestProbabilityIfPositive() {
+        return this.postTestProbability(this.prevalence, this.positiveLR);
+    }
+
+    calcPostTestProbabilityIfNegative() {
+        return this.postTestProbability(this.prevalence, this.negativeLR);
+    }
+
     changePrevalanceByFactor(factor) {
         this.falsePositives = this.falsePositives * factor;
         this.trueNegatives = this.trueNegatives * factor;
+    }
+
+    oddsFromProbability(probability) {
+        return probability / (1 - probability);
+    }
+
+    probabilityFromOdds(odds) {
+        return odds / (odds + 1);
+    }
+
+    postTestOdds(preTestOdds, likelihoodRatio) {
+        return preTestOdds * likelihoodRatio
+    }
+
+    postTestProbability(preTestProbability, likelihoodRatio) {
+        return this.probabilityFromOdds(this.postTestOdds(
+            this.oddsFromProbability(preTestProbability),
+            likelihoodRatio
+        ));
     }
 }

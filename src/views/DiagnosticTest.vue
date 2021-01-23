@@ -69,7 +69,7 @@
           </tr>
           <tr>
             <th></th>
-            <th scope="row" class="p-2 align-middle">Sample Total</th>
+            <th scope="row" class="p-2 align-middle">Total Sample Size</th>
             <td scope="row" colspan="2" class="p-2 text-center">
                 a+b+c+d=  <input disabled v-model.number="totalSample" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none ml-8"
@@ -79,7 +79,8 @@
         </tbody>
       </table>
     </div>
-    <h2 class="text-2xl text-center mt-8 mb-4">Results</h2>
+
+    <h2 class="text-2xl text-center mt-8 mb-4">Test Performance</h2>
     <div>
       <table class="table-auto border border-collapse border-purple-900">
         <thead>
@@ -135,7 +136,46 @@
         v-on:click="multiplyPrevalenceBy(10)">* 10</button>
       </div>
     </div>
-
+    
+    <h2 class="text-2xl text-center mt-8 mb-4">Posttest Probabilities</h2>
+    <div>
+      <table class="table-auto border border-collapse border-purple-900">
+        <thead>
+          <tr class="bg-purple-900 text-white">
+            <th scope="col" class="px-4 py-1 border border-purple-900">Statistic</th>
+            <th scope="col" class="px-4 py-1 border border-purple-900">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Pretest Probability (i.e. Prevalence)</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ prevalence }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Positive Likelihood Ratio</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ positiveLR }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Negative Likelihood Ratio</th>
+            <td class="bg-white px-4 py-1 border border-purple-900">{{ negativeLR }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Posttest Probability Given Positive Test</th>
+            <td class="bg-purple-200 px-4 py-1 border border-purple-900">{{     postTestProbabilityIfPositive }}%</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left px-4 py-1 border border-purple-900">Posttest Probability Given Negative Test</th>
+            <td class="bg-purple-200 px-4 py-1 border border-purple-900">{{     postTestProbabilityIfNegative }}%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-2">
+        <h3 class="text-2xl text-centereading-8">Change prevalence to:</h3>
+        <input type="text" v-model.number="changePrevalenceTo" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent"/>
+        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+        v-on:click="setPrevalence()">Go</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -151,6 +191,7 @@ export default {
       falseNegatives: '',
       falsePositives: '',
       trueNegatives: '',
+      changePrevalenceTo: '',
     }
   },
   computed: {
@@ -179,7 +220,7 @@ export default {
       return this.displayIfAllFieldsFilled(roundFixed(this.results.positiveLR, 1))
     },
     negativeLR() {
-      return this.displayIfAllFieldsFilled(roundFixed(this.results.negativeLR, 1))
+      return this.displayIfAllFieldsFilled(roundFixed(this.results.negativeLR, 2))
     },
     positivePredictiveValue() {
       return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.positivePredictiveValue))
@@ -189,6 +230,12 @@ export default {
     },
     accuracy() {
       return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.accuracy))
+    },
+    postTestProbabilityIfPositive() {
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.postTestProbabilityIfPositive))
+    },
+    postTestProbabilityIfNegative() {
+      return this.displayIfAllFieldsFilled(roundPrecision(100 * this.results.postTestProbabilityIfNegative))
     }
     
   },
@@ -198,11 +245,19 @@ export default {
       this.falseNegatives = ''
       this.falsePositives = ''
       this.trueNegatives = ''
+      this.changePrevalenceTo = ''
     },
     multiplyPrevalenceBy(multiple) {
       if (this.allFieldsFilled()) {
-        this.falsePositives = this.falsePositives * multiple
-        this.trueNegatives =  this.trueNegatives * multiple
+          this.truePositives =  this.truePositives * multiple
+          this.falseNegatives = this.falseNegatives * multiple
+      }
+    },
+    setPrevalence() {
+      if(this.isNumber(this.changePrevalenceTo)) {
+        let newPrevalence = this.changePrevalenceTo/100
+        let changeTotalDiseaseTo = (this.totalDiseaseAbsent*newPrevalence/(newPrevalence - 1))*-1
+        this.multiplyPrevalenceBy(changeTotalDiseaseTo / this.totalDiseasePresent)
       }
     },
     isNumber(val) {
