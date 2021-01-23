@@ -1,10 +1,10 @@
 <template>
   <div class="justify-center justify-items-center">
-    <h2 class="text-2xl text-center mt-8 mb-4">Summary Statistics</h2>
+    <h2 class="text-center">Summary Statistics</h2>
 
     <div class="flex gap-8 justify-center">
       <div class="justify-self-end">
-        <h3 class="px-4 py-1  font-medium text-center">Data Set Input</h3>
+        <h3 class="text-center">Data Set Input</h3>
         <textarea class="h-72 w-48 py-1 px-2 bg-white shadow-sm rounded-lg border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" v-model="input"></textarea>
         <p class="w-48">Paste your dataset into the textbox.</p><p>Each line is one data value.</p>
       </div>

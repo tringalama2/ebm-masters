@@ -1,6 +1,6 @@
 <template>
   <div class="justify-center justify-items-center grid grid-cols-1">
-    <h2 class="text-2xl text-center mt-8 mb-4">Risk Calculator for Treatment Effect</h2>
+    <h2 class="text-center">Risk Calculator for Treatment Effect</h2>
     <p class="pb-2 text-sm">While the conventional 2x2 table for estimating the size of the treatment effect is arranged with disease (outcome) status across the top and exposure status along the side, most manuscripts report the resutls of trials in a table with exposure status across the top, labeling each column.</p>
     <p class="pb-2 text-sm">For convenience, we we rotated the 2x2 table to align with common reporting of outcomes in trial manuscripts.</p>
     <div class="justify-self-center">
@@ -48,7 +48,7 @@
       </table>
     </div>
 
-    <h2 class="text-2xl text-center mt-8 mb-4">Calculations</h2>
+    <h2 class="text-center">Calculations</h2>
     <div>
       <table class="table-auto border border-collapse border-purple-900">
         <thead>

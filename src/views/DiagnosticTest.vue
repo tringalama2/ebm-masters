@@ -1,6 +1,6 @@
 <template>
   <div class="justify-center justify-items-center grid grid-cols-1">
-    <h2 class="text-2xl text-center mt-8 mb-4">Performance Characteristics for Diagnostic Tests</h2>
+    <h2 class="text-center">Performance Characteristics for Diagnostic Tests</h2>
     <div class="justify-self-center">
       <table class="table-auto border-collapse">
         <thead>
@@ -80,7 +80,7 @@
       </table>
     </div>
 
-    <h2 class="text-2xl text-center mt-8 mb-4">Test Performance</h2>
+    <h2 class="text-center">Test Performance</h2>
     <div>
       <table class="table-auto border border-collapse border-purple-900">
         <thead>
@@ -125,19 +125,30 @@
         </tbody>
       </table>
       <div class="mt-2">
-        <h3 class="text-2xl text-centereading-8">Change prevalence by:</h3>
-        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
-        v-on:click="multiplyPrevalenceBy(.1)">* 1/10</button>
-        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
-        v-on:click="multiplyPrevalenceBy(.5)">* 1/2</button>
-        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
-        v-on:click="multiplyPrevalenceBy(2)">* 2</button>
-        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
-        v-on:click="multiplyPrevalenceBy(10)">* 10</button>
+        <h3 class="text-center">Change prevalence by:</h3>
+        
+        <div class="flex justify-center">
+          <div>
+            <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+            v-on:click="multiplyPrevalenceBy(.1)">* 1/10</button>
+          </div>
+          <div>
+            <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+            v-on:click="multiplyPrevalenceBy(.5)">* 1/2</button>
+          </div>
+          <div>
+            <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+            v-on:click="multiplyPrevalenceBy(2)">* 2</button>
+          </div>
+          <div>
+            <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+            v-on:click="multiplyPrevalenceBy(10)">* 10</button>
+          </div>
+        </div>
       </div>
     </div>
     
-    <h2 class="text-2xl text-center mt-8 mb-4">Posttest Probabilities</h2>
+    <h2 class="text-center">Posttest Probabilities</h2>
     <div>
       <table class="table-auto border border-collapse border-purple-900">
         <thead>
@@ -170,10 +181,16 @@
         </tbody>
       </table>
       <div class="mt-2">
-        <h3 class="text-2xl text-centereading-8">Change prevalence to:</h3>
-        <input type="text" v-model.number="changePrevalenceTo" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent"/>
-        <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
-        v-on:click="setPrevalence()">Go</button>
+        <h3 class="text-center">Change prevalence to:</h3>
+        <div class="flex justify-center">
+          <div>
+            <input type="text" v-model.number="changePrevalenceTo" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent"/>
+          </div>
+          <div>
+            <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none"
+            v-on:click="setPrevalence()">Go</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
