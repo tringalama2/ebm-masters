@@ -5,8 +5,8 @@
     <div class="flex gap-8 justify-center">
       <div class="justify-self-end">
         <h3 class="text-center">Data Set Input</h3>
-        <textarea class="h-72 w-48 py-1 px-2 bg-white shadow-sm rounded-lg border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" v-model="input"></textarea>
-        <p class="w-48">Paste your dataset into the textbox.</p><p>Each line is one data value.</p>
+        <textarea class="h-48 md:h-72 w-20 md:w-48 py-1 px-2 bg-white shadow-sm rounded-lg border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" v-model="input"></textarea>
+        <p class="w-20 md:w-48">Paste your dataset into the textbox.</p><p>Each line is one data value.</p>
       </div>
       <div class="justify-self-start">
         <table class="w-full border border-collapse border-purple-900">
