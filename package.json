@@ -11,6 +11,7 @@
     "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
     "jstat": "^1.9.4",
+    "plotly.js-dist": "^1.58.4",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^3.0.0",

@@ -2,13 +2,13 @@
   <div class="justify-center justify-items-center">
     <h2 class="text-center">Summary Statistics</h2>
 
-    <div class="flex gap-8 justify-center">
-      <div class="justify-self-end">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
+      <div class="justify-self-center">
         <h3 class="text-center">Data Set Input</h3>
         <textarea class="h-48 md:h-72 w-20 md:w-48 py-1 px-2 bg-white shadow-sm rounded-lg border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" v-model="input"></textarea>
         <p class="w-20 md:w-48">Paste your dataset into the textbox.</p><p>Each line is one data value.</p>
       </div>
-      <div class="justify-self-start">
+      <div class="justify-self-center">
         <table class="w-full border border-collapse border-purple-900">
           <thead>
             <tr class="bg-purple-900 text-white">
@@ -77,20 +77,55 @@
           </tbody>
         </table>
       </div>
+    <div class="col-span-2 justify-self-center">
+      <Plotly :chart="chart"></Plotly>
     </div>
-
+      
+    </div>
   </div>
 </template>
 
 <script>
 import SummaryStat from './SummaryStat.js'
 import { roundFixed } from "../helpers.js"
+import Plotly from "../components/Plotly"
 
 export default {
   name: 'SummaryStatistics',
+  components: {
+    Plotly
+  },
   data() {
     return {
       input: '',
+      chart: {
+        uuid: "123",
+        traces: [
+          {
+            x: [],
+            type: 'histogram',
+              error_y: {
+                visible: true,
+              color: 'rgba(76,29,149, 1)'
+              },
+            marker: {
+              color: 'rgba(76,29,149, 0.7)',
+            },
+          }
+        ],
+        layout: {
+          margin: {
+            l:70, r:60, t:30, b:70
+          },
+          font: {
+              color: 'rgba(76,29,149, 1)'
+          },
+          bargap: 0.05, 
+          bargroupgap: 0.2, 
+          xaxis: {title: "Value"}, 
+          yaxis: {title: "Count"}
+        }
+      }
     }
     
   },
@@ -103,6 +138,7 @@ export default {
       for (const value of this.input.trim().split('\n').values()) {
         tempVector.push(Number(value))
       }
+
       return tempVector
     },
     stats() {
@@ -181,6 +217,11 @@ export default {
     },
     display95CI(value) {
       return '(95% CI: ' + value + ')'
+    }
+  },
+  watch: {
+    input() {
+      this.chart.traces[0].x = this.vector
     }
   }
 }
