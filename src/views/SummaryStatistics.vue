@@ -87,7 +87,7 @@
 
 <script>
 import SummaryStat from './SummaryStat.js'
-import { roundFixed } from "../helpers.js"
+import { roundFixed } from "@/helpers"
 import Plotly from "../components/Plotly"
 
 export default {
@@ -136,7 +136,9 @@ export default {
       }
       let tempVector = []
       for (const value of this.input.trim().split('\n').values()) {
-        tempVector.push(Number(value))
+        if(value !== '') {
+          tempVector.push(Number(value))
+        }
       }
 
       return tempVector
