@@ -171,7 +171,7 @@ export default {
       if (isNaN(this.stats.range())) {
         return ''
       }
-      return this.stats.range()
+      return roundFixed(this.stats.range(), 3)
     },
     varianceSample() {
       if (!this.emptySample()) {
