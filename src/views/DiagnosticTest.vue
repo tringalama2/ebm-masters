@@ -23,13 +23,13 @@
             <td class="p-2">
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div class="inline-block align-middle">True Positives</div>
-                <div class="inline-block align-middle">a= <input v-model.number="truePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+                <div class="inline-block align-middle">a= <input tabindex="1" v-model.number="truePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
               </div>
             </td>
             <td class="p-2">
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div class="inline-block align-middle">False Positives</div>
-                <div class="inline-block align-middle">c= <input v-model.number="falsePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+                <div class="inline-block align-middle">b= <input tabindex="3" v-model.number="falsePositives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
               </div>
             </td>
           </tr>
@@ -38,13 +38,13 @@
             <td class="p-2">
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div class="inline-block align-middle">False Negatives</div>
-                <div class="inline-block align-middle">b= <input v-model.number="falseNegatives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+                <div class="inline-block align-middle">c= <input tabindex="2" v-model.number="falseNegatives" type="text" class="py-1 px-2 bg-white shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
               </div>
             </td>
             <td class="p-2">
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div class="inline-block align-middle">True Negatives</div>
-                <div class="inline-block align-middle">d= <input v-model.number="trueNegatives" type="text" class="py-1 px-2 bg-white  shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
+                <div class="inline-block align-middle">d= <input tabindex="4" v-model.number="trueNegatives" type="text" class="py-1 px-2 bg-white  shadow-sm rounded-lg w-16 border border-transparent focus:outline-none ring-2 ring-purple-200 focus:ring-purple-600 focus:border-transparent" /></div>
               </div>
             </td>
           </tr>
@@ -55,7 +55,7 @@
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div></div>
                 <div>
-                  a+b=<input disabled v-model.number="totalDiseasePresent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                  a+c=<input disabled v-model.number="totalDiseasePresent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 </div>
               </div>
             </td>
@@ -63,14 +63,14 @@
               <div class="flex justify-between space-x-4 content-center items-center">
                 <div></div>
                 <div>
-                  c+d=<input disabled v-model.number="totalDiseaseAbsent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
+                  b+d=<input disabled v-model.number="totalDiseaseAbsent" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 </div>
               </div></td>
           </tr>
           <tr>
             <th></th>
             <th scope="row" class="p-2 align-middle">Total Sample Size</th>
-            <td scope="row" colspan="2" class="p-2 text-center">
+            <td colspan="2" class="p-2 text-center">
                 a+b+c+d=  <input disabled v-model.number="totalSample" type="text" class="py-1 px-2 text-purple-600 font-medium bg-purple-200 shadow-sm rounded-lg w-16 border border-transparent" />
                 <button class="text-purple-100 inline-block px-2 py-1 mx-2 my-1 text-xs font-normal leading-6 text-center transition bg-purple-500 rounded-md shadow hover:shadow-lg hover:bg-purple-600 focus:outline-none ml-8"
                 v-on:click="reset()">Reset</button>
@@ -193,7 +193,36 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+
+  <h2 class="text-center mt-16">Notes</h2>
+    <div class="md:mx-16 lg:mx-48 xl:mx-64">
+      <div>
+      <p>*Remember the following:</p>
+        <ul class="mb-2">
+          <li>Most tests are either highly sensitive, or highly specific. <em>It is uncommon, yet highly desired, for a test to be both highly sensitive and highly specific.</em></li>
+        </ul>
+
+      <table class="table-auto border border-collapse border-purple-900">
+        <thead>
+        <tr class="bg-purple-900 text-white">
+          <th scope="col" class="px-4 py-1 border border-purple-900">Sensitive Tests</th>
+          <th scope="col" class="px-4 py-1 border border-purple-900">Specific Tests</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="bg-white px-4 py-1 border border-purple-900">Highly sensitive test will have <strong>low negative likelihood ratios (LR-)</strong></td>
+          <td class="bg-white px-4 py-1 border border-purple-900">Highly specific test will have <strong>high positive likelihood ratios (LR+)</strong></td>
+        </tr>
+        <tr>
+          <td class="bg-white px-4 py-1 border border-purple-900">A <span class="font-black bg-purple-900 p-1 text-white underline decoration-4">N</span>egative result of a Se<span class="font-black bg-purple-900 p-1 text-white underline decoration-4">N</span>sitive test decreases the likelihood of the target condition</td>
+          <td class="bg-white px-4 py-1 border border-purple-900">A <span class="font-black bg-purple-900 p-1 text-white underline decoration-4">P</span>ositive result of a S<span class="font-black bg-purple-900 p-1 text-white underline decoration-4">P</span>ecific test increases the likelihood of the target condition</td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
 </template>
 
 <script>
